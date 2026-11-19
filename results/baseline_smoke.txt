@@ -1,0 +1,6 @@
+NAME      IMAGE                           COMMAND                  SERVICE   CREATED          STATUS                    PORTS
+broker    apache/kafka:latest             "/__cacert_entrypoin…"   broker    21 minutes ago   Up 21 minutes (healthy)   0.0.0.0:9092->9092/tcp, [::]:9092->9092/tcp
+mlflow    ghcr.io/mlflow/mlflow:v2.14.1   "mlflow server --hos…"   mlflow    21 minutes ago   Up 21 minutes (healthy)   0.0.0.0:5001->5000/tcp, [::]:5001->5000/tcp
+scorer    docker-scorer                   "python scoring/scor…"   scorer    5 minutes ago    Up 5 minutes (healthy)    0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
+{"model_loaded":true,"status":"ok"}
+{"canary_score":0.32812555710104035,"model_path":"/app/models/artifacts/model.pkl","ready":true}

@@ -1,0 +1,9 @@
+.env
+__pycache__/
+*.pyc
+venv/
+data/processed/
+models/artifacts/
+reports/
+mlruns/
+.DS_Store

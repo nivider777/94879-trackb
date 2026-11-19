@@ -1,0 +1,28 @@
+reference=data/challenges/b3_reference_features.csv rows=653  current=data/challenges/b3_current_features.csv rows=653
+
+== drift statistics ==
+             feature  ks_stat  ks_p   psi  wasserstein_over_ref_std  ref_median  cur_median   ref_p95   cur_p95  cur_share_above_ref_p95  cur_share_above_ref_max
+    midprice_returns        0     1     0                         0           0           0 4.567e-05 4.567e-05                  0.05054                        0
+   spread_normalized   0.9556     0 8.245                     0.512   9.841e-08   3.936e-07 1.969e-07 7.876e-07                        1                  0.01991
+order_book_imbalance        0     1     0                         0     -0.6013     -0.6013    0.9996    0.9996                  0.05054                        0
+     trade_intensity        0     1     0                         0         237         237       326       326                    0.049                        0
+
+== structural check ==
+{
+  "same_timestamps": true,
+  "midprice_returns": "identical",
+  "spread_normalized": "ratio min=4 max=4",
+  "order_book_imbalance": "identical",
+  "trade_intensity": "identical",
+  "price": "identical",
+  "midprice": "identical"
+}
+reference: implied USD spread median=0.0100 p95=0.0200
+current: implied USD spread median=0.0400 p95=0.0800
+
+== model impact (replica trained on reference (train_baseline.py logic)) ==
+standardized coefficients: {'midprice_returns': np.float64(0.227), 'spread_normalized': np.float64(-1.397), 'order_book_imbalance': np.float64(-0.556), 'trade_intensity': np.float64(0.353)}
+reference: mean score=0.538  alert rate (p>=0.5)=0.636  PR-AUC=0.118  ROC-AUC=0.541  label base rate=0.103
+current: mean score=0.522  alert rate (p>=0.5)=0.599  PR-AUC=0.117  ROC-AUC=0.537  label base rate=0.103
+labels identical between datasets: True (label depends only on midprice_returns)
+decision flips: 24 of 653  (alert->no alert: 24, no alert->alert: 0)

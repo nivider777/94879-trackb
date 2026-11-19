@@ -1,0 +1,6 @@
+# Challenge B2 override: use together with docker/compose.yaml.
+# This file intentionally introduces exactly one deployment fault.
+services:
+  scorer:
+    environment:
+      MODEL_PATH: /app/models/artifacts/model-b2-missing.pkl

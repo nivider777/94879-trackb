@@ -1,0 +1,30 @@
+################ MODEL_PATH=models/artifacts/model.pkl
+-- startup log:
+[score_service] loaded model from models/artifacts/model.pkl
+ * Serving Flask app 'score_service'
+-- GET /health:
+{"model_loaded":true,"status":"ok"}
+ [HTTP 200]
+-- GET /ready:
+{"canary_score":0.41425587615723514,"model_path":"models/artifacts/model.pkl","ready":true}
+ [HTTP 200]
+-- POST /score:
+{"score":4.565395175190423e-16,"spike":false}
+ [HTTP 200]
+-- ORIGINAL healthcheck (/health) exit code: 0  (0 = healthy)
+-- NEW healthcheck (/ready) exit code: 0  (0 = healthy)
+################ MODEL_PATH=models/artifacts/model-b2-missing.pkl
+-- startup log:
+[score_service] WARNING: no model found at models/artifacts/model-b2-missing.pkl. Run models/train_baseline.py first. Starting anyway: /health stays 200 (liveness) but /ready returns 503.
+ * Serving Flask app 'score_service'
+-- GET /health:
+{"model_loaded":false,"status":"ok"}
+ [HTTP 200]
+-- GET /ready:
+{"load_error":"[Errno 2] No such file or directory: 'models/artifacts/model-b2-missing.pkl'","model_path":"models/artifacts/model-b2-missing.pkl","ready":false,"reason":"model not loaded"}
+ [HTTP 503]
+-- POST /score:
+{"error":"model not loaded"}
+ [HTTP 503]
+-- ORIGINAL healthcheck (/health) exit code: 0  (0 = healthy)
+-- NEW healthcheck (/ready) exit code: 1  (0 = healthy)
